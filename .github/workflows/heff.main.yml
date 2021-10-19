@@ -1,4 +1,17 @@
-"triggers:"
+trigger MyTrigger on Contact (after insert, after update) {
+    // This is sending an array
+    Sender.post(JSON.serialize(Trigger.new))
+}
+
+public class Sender {
+    @future(callout=true)
+    public static void post(String jsonString) {
+        HttpRequest req = new HttpRequest();
+        req.setMethod('POST');
+        req.setBody(jsonString);
+        ...
+    }
+}
 {
     "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
